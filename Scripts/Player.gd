@@ -10,14 +10,10 @@ var xDirection = 0
 #stores the previous direction even if xdirection =0
 var lastDirection = 1
 var speedX = 100
-
-
-
 var speedY = 0
-
-
 var facingLeft = false
 
+var damage = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -54,6 +50,6 @@ func jump():
 func attack():
 	var target = get_node("Attackray").get_collider()
 	if (target != null):
-		print(target.name)
+		target.interact(damage)
 
 

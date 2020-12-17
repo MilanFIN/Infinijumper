@@ -29,8 +29,8 @@ position = Vector2( 472, 168 )
 
 [node name="Cameramount" type="KinematicBody2D" parent="."]
 position = Vector2( 336, 176 )
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 0
 
 [node name="Camera2D" type="Camera2D" parent="Cameramount"]
 current = true
