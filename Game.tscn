@@ -15,18 +15,6 @@ extents = Vector2( 56, 288 )
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Mapbuilder" type="Node" parent="."]
-script = ExtResource( 6 )
-
-[node name="TileMap" type="TileMap" parent="Mapbuilder"]
-tile_set = ExtResource( 3 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
-format = 1
-
-[node name="Tree" parent="Mapbuilder" instance=ExtResource( 8 )]
-position = Vector2( 472, 168 )
-
 [node name="Cameramount" type="KinematicBody2D" parent="."]
 position = Vector2( 336, 176 )
 collision_layer = 4
@@ -41,6 +29,18 @@ position = Vector2( -376, -8 )
 shape = SubResource( 1 )
 
 [node name="Background" parent="Cameramount" instance=ExtResource( 7 )]
+
+[node name="Mapbuilder" type="Node" parent="."]
+script = ExtResource( 6 )
+
+[node name="TileMap" type="TileMap" parent="Mapbuilder"]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+format = 1
+
+[node name="Tree" parent="Mapbuilder" instance=ExtResource( 8 )]
+position = Vector2( 472, 168 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 336, 160 )

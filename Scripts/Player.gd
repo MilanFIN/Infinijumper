@@ -15,6 +15,7 @@ var facingLeft = false
 
 var damage = 1
 
+var hp = 100
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -52,4 +53,7 @@ func attack():
 	if (target != null):
 		target.interact(damage)
 
+func pickup(type, amount):
+	if (type == "hp"):
+		hp += amount
 
