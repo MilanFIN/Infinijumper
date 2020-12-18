@@ -13,7 +13,9 @@ script = ExtResource( 1 )
 drop = "Apple"
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -24 )
 shape = SubResource( 1 )
 
 [node name="tree" type="Sprite" parent="."]
+position = Vector2( 0, -24 )
 texture = ExtResource( 2 )

@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 			var dropFile = load("res://Actors/Drops/"+drop+".tscn")
 			var dropInstance = dropFile.instance()
 			dropInstance.position = position
-			print(get_parent().name)
+
 			get_parent().add_child(dropInstance)
 
 		queue_free()
