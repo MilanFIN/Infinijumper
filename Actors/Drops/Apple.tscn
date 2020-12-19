@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Graphics/Drops/apple.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Drop.gd" type="Script" id=2]
@@ -6,9 +6,12 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 8, 8 )
 
-[node name="Apple" type="Area2D"]
-collision_layer = 2147483652
-collision_mask = 2147483648
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8, 8 )
+
+[node name="Apple" type="KinematicBody2D"]
+collision_layer = 2147483648
+collision_mask = 2147483649
 script = ExtResource( 2 )
 type = "hp"
 amount = 5
@@ -18,4 +21,10 @@ shape = SubResource( 1 )
 
 [node name="apple" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-[connection signal="body_entered" from="." to="." method="_on_Apple_body_entered"]
+
+[node name="PickupBox" type="Area2D" parent="."]
+
+[node name="hitbox" type="CollisionShape2D" parent="PickupBox"]
+shape = SubResource( 2 )
+[connection signal="tree_entered" from="." to="." method="_on_Apple_body_entered"]
+[connection signal="body_entered" from="PickupBox" to="." method="_on_Apple_body_entered"]

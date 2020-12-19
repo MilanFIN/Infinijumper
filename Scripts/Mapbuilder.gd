@@ -1,6 +1,8 @@
 extends Node
 
 
+const TREEPROBABILITY = 0.05
+
 
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
@@ -12,8 +14,10 @@ var firstTileX = 0
 var mapHeightArray = []
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	randomize()
 	generator.init()
 	populateTilemap()
 
@@ -29,22 +33,25 @@ func _process(delta: float) -> void:
 func CreateDestroyables():
 	var tilemap = get_node("TileMap")
 	var j = 0
-	for i in range(firstTileX, lastTileX, 4):
-		
-		var y = mapHeightArray[j]
-		var localC = Vector2(i, y)
-		localC.y += yOffset
-		localC.x += 1
-		var globalC = tilemap.map_to_world(localC)
+	for i in range(firstTileX, lastTileX):
+
+		var probability = rand_range(0.0, 1.0)
+
+		if (probability < TREEPROBABILITY):
+			var y = mapHeightArray[j]
+			var localC = Vector2(i, y)
+			localC.y += yOffset
+			localC.x += 1
+			var globalC = tilemap.map_to_world(localC)
 
 
-		
-		var entityFile = load("res://Actors/Destroyables/Tree.tscn")
-		var entity = entityFile.instance()
-		entity.position = globalC
+			
+			var entityFile = load("res://Actors/Destroyables/Tree.tscn")
+			var entity = entityFile.instance()
+			entity.position = globalC
 
-		get_parent().add_child(entity)
-		j += 4
+			get_parent().add_child(entity)
+		j += 1
 	pass
 
 

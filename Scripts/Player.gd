@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 
-const GRAVITY = 10
+const GRAVITY = 500
 const JUMPPOWER = 300
 const ATTACKDISTANCE = 30
 
@@ -22,7 +22,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:
-	speedY +=  GRAVITY 
+	speedY +=  GRAVITY*delta
 	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
 	if (is_on_floor()):
 		speedY = 0
