@@ -2,7 +2,7 @@ extends Node
 
 
 const TREEPROBABILITY = 0.05
-
+const MONSTERPROBABILITY = 0.1
 
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
@@ -44,13 +44,34 @@ func CreateDestroyables():
 			localC.x += 1
 			var globalC = tilemap.map_to_world(localC)
 
-
-			
 			var entityFile = load("res://Actors/Destroyables/Tree.tscn")
 			var entity = entityFile.instance()
 			entity.position = globalC
 
 			get_parent().add_child(entity)
+		j += 1
+	pass
+
+
+func CreateMonsters():
+	var tilemap = get_node("TileMap")
+	var j = 0
+	for i in range(firstTileX, lastTileX):
+
+		var probability = rand_range(0.0, 1.0)
+
+		if (probability < MONSTERPROBABILITY):
+			var y = mapHeightArray[j]
+			var localC = Vector2(i, y)
+			localC.y += yOffset
+			localC.x += 1
+			var globalC = tilemap.map_to_world(localC)
+
+			var monsterFile = load("res://Actors/Monsters/Spider.tscn")
+			var monster = monsterFile.instance()
+			monster.position = globalC
+
+			get_parent().add_child(monster)
 		j += 1
 	pass
 
@@ -95,4 +116,5 @@ func populateTilemap():
 	
 	#add trees etc
 	CreateDestroyables()
+	CreateMonsters()
 	
