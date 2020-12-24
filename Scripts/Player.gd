@@ -28,6 +28,8 @@ func _physics_process(delta: float) -> void:
 		speedY = 0
 
 
+
+
 	get_node("Sprite").flip_h = facingLeft
 
 	get_node("Attackray").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
