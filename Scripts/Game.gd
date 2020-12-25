@@ -17,12 +17,15 @@ func _process(delta: float) -> void:
 		get_node("Player").attack()
 
 	#handle joystick
-	if (get_node("CanvasLayer/Stick").position.x < get_node("CanvasLayer/Base").position.x):
+	if (get_node("Hud/Stick").position.x < get_node("Hud/Base").position.x):
 		get_node("Player").moveLeft()
-	if (get_node("CanvasLayer/Stick").position.x > get_node("CanvasLayer/Base").position.x):
+	if (get_node("Hud/Stick").position.x > get_node("Hud/Base").position.x):
 		get_node("Player").moveRight()
 
-
+	#update hud
+	var hp = get_node("Player").hp
+	var maxHp = get_node("Player").maxHp
+	get_node("Hud/Healthbar").setHp(hp, maxHp)
 
 
 
@@ -38,19 +41,19 @@ func _input(event):
 	if event is InputEventScreenDrag: 
 		directionalInput = true
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		if (abs(get_node("CanvasLayer/Base").position.y - (event.position.y - 180)) > 40):
+		if (abs(get_node("Hud/Base").position.y - (event.position.y - 180)) > 40):
 				directionalInput = false
-		if (abs(get_node("CanvasLayer/Base").position.x - (event.position.x - 320)) > 100):
+		if (abs(get_node("Hud/Base").position.x - (event.position.x - 320)) > 100):
 				directionalInput = false
 		if (not directionalInput and event.position.x < 320):
-			get_node("CanvasLayer/Stick").position = get_node("CanvasLayer/Base").position
+			get_node("Hud/Stick").position = get_node("Hud/Base").position
 		elif (directionalInput):
 			#finally can be sure that should record movement input
-			get_node("CanvasLayer/Stick").position.x = event.position.x - 320
+			get_node("Hud/Stick").position.x = event.position.x - 320
 
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			print(abs(get_node("CanvasLayer/Base").position.x - (event.position.x - 320)))
+			print(abs(get_node("Hud/Base").position.x - (event.position.x - 320)))
 #func _draw():
 #	draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
 

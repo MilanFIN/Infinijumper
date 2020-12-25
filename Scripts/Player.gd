@@ -15,13 +15,23 @@ var facingLeft = false
 
 var damage = 1
 
-var hp = 100
+var maxHp = 100
+var hp = 0
+var growDir = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	hp = 0.5*maxHp
 	pass # Replace with function body.
 
 func _physics_process(delta: float) -> void:
+	
+	if (hp < 0 or hp > maxHp):
+		growDir *= -1
+	hp += growDir
+		
+
+	
 	speedY +=  GRAVITY*delta
 	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
 	if (is_on_floor()):
