@@ -15,10 +15,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func setHp(c, m): #current, max
-	
 	var ratio = float(c) / m
-
 	region_rect = Rect2(0,0, textureSize.x*ratio, textureSize.y)
-	#position.x =  textureSize.x*ratio/2
 	pass
-#region_rect
+

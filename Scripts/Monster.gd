@@ -9,6 +9,8 @@ var speedX
 
 var dirX = 1
 var timeSpentInDirection = 0
+var maxTimeUntilDirChange = 2
+var minTimeUntilDirChange = 0.5
 
 var aggressive = false
 
@@ -23,7 +25,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	
-	
+	var previousDir = dirX
 	
 	speedY += delta*GRAVITY
 
@@ -38,19 +40,13 @@ func _physics_process(delta: float) -> void:
 			if (blockage.name == "TileMap"): #colliding with environment
 				speedY = -JUMPPOWER
 
-
-
-	
-
-
-
-
 	timeSpentInDirection += delta
 
 	if (not aggressive):
-		if (timeSpentInDirection > 2):
+		if (timeSpentInDirection > maxTimeUntilDirChange):
 			dirX *= -1
-			timeSpentInDirection = 0
+
+
 
 	var playerX = get_tree().get_root().get_node("Game/Player").position.x
 	if (abs(position.x - playerX) < 100):
@@ -58,13 +54,21 @@ func _physics_process(delta: float) -> void:
 	else:
 		aggressive = false
 
-	if (aggressive):
+	if (aggressive and timeSpentInDirection > minTimeUntilDirChange):
 		if (playerX < position.x):
 			dirX = -1
 		else:
 			dirX = 1
 		
 	get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*dirX, 0)
+
+	if (dirX > 0):
+		get_node("Sprite").flip_h = true
+	else:
+		get_node("Sprite").flip_h = false
+
+	if (dirX != previousDir):
+		timeSpentInDirection = 0
 
 func interact(dmg):
 	queue_free()

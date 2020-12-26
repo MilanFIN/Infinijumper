@@ -11,10 +11,10 @@ __meta__ = {
 }
 
 [node name="Start" type="Button" parent="."]
-margin_left = 272.0
-margin_top = 152.0
-margin_right = 361.0
-margin_bottom = 176.0
+margin_left = 152.0
+margin_top = 104.0
+margin_right = 241.0
+margin_bottom = 128.0
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false

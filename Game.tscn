@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Scripts/Mapbuilder.gd" type="Script" id=6]
 [ext_resource path="res://Actors/Background.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Actors/Hud/Healthbar.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Graphics/Hud/joystick.png" type="Texture" id=9]
+[ext_resource path="res://Graphics/Hud/joystick_base.png" type="Texture" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 56, 288 )
@@ -16,7 +18,7 @@ extents = Vector2( 56, 288 )
 script = ExtResource( 2 )
 
 [node name="Cameramount" type="KinematicBody2D" parent="."]
-position = Vector2( 336, 176 )
+position = Vector2( 208, 120 )
 collision_layer = 4
 collision_mask = 0
 
@@ -25,7 +27,7 @@ current = true
 script = ExtResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cameramount"]
-position = Vector2( -376, -8 )
+position = Vector2( -264, -8 )
 shape = SubResource( 1 )
 
 [node name="Background" parent="Cameramount" instance=ExtResource( 7 )]
@@ -42,27 +44,26 @@ format = 1
 [node name="Entities" type="Node" parent="Mapbuilder"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 336, 160 )
+position = Vector2( 208, 120 )
 
 [node name="Hud" type="CanvasLayer" parent="."]
-offset = Vector2( 320, 180 )
-transform = Transform2D( 1, 0, 0, 1, 320, 180 )
+offset = Vector2( 210, 120 )
+transform = Transform2D( 1, 0, 0, 1, 210, 120 )
 
 [node name="Base" type="Sprite" parent="Hud"]
-position = Vector2( -232, 124 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 5 )
+position = Vector2( -130, 72 )
+texture = ExtResource( 10 )
 
 [node name="Stick" type="Sprite" parent="Hud"]
-position = Vector2( -232, 124 )
-texture = ExtResource( 5 )
+position = Vector2( -130, 72 )
+texture = ExtResource( 9 )
 
 [node name="Jump" type="TouchScreenButton" parent="Hud"]
-position = Vector2( 224, 100 )
+position = Vector2( 118, 40 )
 scale = Vector2( 2.25, 2 )
 normal = ExtResource( 5 )
 action = "jump"
 
 [node name="Healthbar" parent="Hud" instance=ExtResource( 8 )]
-position = Vector2( -312, -172 )
+position = Vector2( -202, -112 )
 z_index = -10

@@ -25,7 +25,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var realLastTileX = get_node("TileMap").map_to_world(Vector2(lastTileX, 0)).x
 	var playerX = get_parent().get_node("Player").position.x
-	if (realLastTileX - playerX < 320):
+	if (realLastTileX - playerX < 240):
 		populateTilemap()
 		print("populating")
 
@@ -82,7 +82,7 @@ func populateTilemap():
 
 	var tilemap = get_node("TileMap")
 	#tilemap.clear()
-	mapHeightArray = generator.generateTileheights(lastTileX, 40)
+	mapHeightArray = generator.generateTileheights(lastTileX, 27)
 	#first iteration, so should ensure that ground is under player
 	if (tilemap.get_used_cells().size() == 0):
 		var tile = tilemap.world_to_map(get_parent().get_node("Player").position)
@@ -92,12 +92,11 @@ func populateTilemap():
 
 
 	for x in range(len(mapHeightArray)):
-		lastTileX += 1
 		tilemap.set_cell(lastTileX, mapHeightArray[x]+yOffset, 1)
 		var firstBelowSurface = mapHeightArray[x]+yOffset+1
 		for filler in range(firstBelowSurface, firstBelowSurface + 22):
 			tilemap.set_cell(lastTileX, filler, 0)
-
+		lastTileX += 1
 
 
 	#TODO: FIX BY USING GET_USED_CELLS, and remove from those instead

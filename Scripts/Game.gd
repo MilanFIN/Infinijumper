@@ -41,19 +41,22 @@ func _input(event):
 	if event is InputEventScreenDrag: 
 		directionalInput = true
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		if (abs(get_node("Hud/Base").position.y - (event.position.y - 180)) > 40):
+		if (abs(get_node("Hud/Base").position.y - (event.position.y - 120)) > 30):
 				directionalInput = false
-		if (abs(get_node("Hud/Base").position.x - (event.position.x - 320)) > 100):
+		if (abs(get_node("Hud/Base").position.x - (event.position.x - 210)) > 70):
 				directionalInput = false
-		if (not directionalInput and event.position.x < 320):
+		if (not directionalInput and event.position.x < 210):
 			get_node("Hud/Stick").position = get_node("Hud/Base").position
 		elif (directionalInput):
 			#finally can be sure that should record movement input
-			get_node("Hud/Stick").position.x = event.position.x - 320
+			var stickPosition = event.position.x -210
+			stickPosition = clamp(stickPosition, get_node("Hud/Base").position.x-30, get_node("Hud/Base").position.x+30)
+			get_node("Hud/Stick").position.x = stickPosition
 
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			print(abs(get_node("Hud/Base").position.x - (event.position.x - 320)))
+			var absdiff = abs(get_node("Hud/Base").position.x - (event.position.x - 210))
+			print(absdiff)
 #func _draw():
 #	draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
 
