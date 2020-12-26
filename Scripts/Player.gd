@@ -5,6 +5,7 @@ extends KinematicBody2D
 const GRAVITY = 500
 const JUMPPOWER = 300
 const ATTACKDISTANCE = 30
+const ATTACKDELAY = 300 #ms
 
 var xDirection = 0
 #stores the previous direction even if xdirection =0
@@ -17,7 +18,13 @@ var damage = 1
 
 var maxHp = 100
 var hp = 0
-var growDir = 1
+var growDir = 1#temp
+
+
+var lastAttackTime = 0
+
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -42,8 +49,9 @@ func _physics_process(delta: float) -> void:
 
 	get_node("Sprite").flip_h = facingLeft
 
-	get_node("Attackray").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
-	
+	get_node("Attackray1").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
+	get_node("Attackray2").cast_to = Vector2(lastDirection*ATTACKDISTANCE, -ATTACKDISTANCE)
+	get_node("Attackray3").cast_to = Vector2(0, -ATTACKDISTANCE)
 	
 	xDirection = 0
 func moveLeft():
@@ -61,9 +69,14 @@ func jump():
 		speedY = -JUMPPOWER
 
 func attack():
-	var target = get_node("Attackray").get_collider()
-	if (target != null):
-		target.interact(damage)
+	var currentTime = OS.get_ticks_msec()
+	if (currentTime - lastAttackTime > ATTACKDELAY):
+		for i in range(1,4):
+			var target = get_node("Attackray"+str(i)).get_collider()
+			if (target != null):
+				target.interact(damage)
+		lastAttackTime = currentTime
+
 
 func pickup(type, amount):
 	if (type == "hp"):

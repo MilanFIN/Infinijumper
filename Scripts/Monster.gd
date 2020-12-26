@@ -5,7 +5,7 @@ const GRAVITY = 500
 const JUMPPOWER = 150
 
 var speedY = -100
-var speedX
+var speedX = 0
 
 var dirX = 1
 var timeSpentInDirection = 0
@@ -15,6 +15,9 @@ var minTimeUntilDirChange = 0.5
 var aggressive = false
 
 var blockCastDistanceX = 20
+
+var tookDamage = false #took damage this game tick?
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -62,13 +65,25 @@ func _physics_process(delta: float) -> void:
 		
 	get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*dirX, 0)
 
-	if (dirX > 0):
-		get_node("Sprite").flip_h = true
-	else:
-		get_node("Sprite").flip_h = false
 
 	if (dirX != previousDir):
 		timeSpentInDirection = 0
 
+
+	if (aggressive):
+		if (dirX > 0):
+			get_node("Sprite").flip_h = true
+		else:
+			get_node("Sprite").flip_h = false
+	else:
+		if (position.x > playerX):
+			get_node("Sprite").flip_h = true
+		else:
+			get_node("Sprite").flip_h = false
+
+	tookDamage = false
+
 func interact(dmg):
-	queue_free()
+	if (not tookDamage):
+		tookDamage = true
+		queue_free()
