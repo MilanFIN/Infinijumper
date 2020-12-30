@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/Slasheffect.gd" type="Script" id=1]
+[ext_resource path="res://Graphics/Player/slash.png" type="Texture" id=2]
+
+[node name="Sprite" type="Sprite"]
+z_index = 5
+z_as_relative = false
+texture = ExtResource( 2 )
+script = ExtResource( 1 )

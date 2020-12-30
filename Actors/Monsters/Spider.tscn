@@ -4,6 +4,7 @@
 [ext_resource path="res://Graphics/Entities/spider.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
+radius = 8.0
 height = 0.0
 
 [node name="Spider" type="KinematicBody2D"]

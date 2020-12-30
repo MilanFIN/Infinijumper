@@ -36,6 +36,8 @@ shape = SubResource( 1 )
 script = ExtResource( 6 )
 
 [node name="TileMap" type="TileMap" parent="Mapbuilder"]
+z_index = -1
+z_as_relative = false
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )

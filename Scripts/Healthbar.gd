@@ -16,6 +16,7 @@ func _ready() -> void:
 
 func setHp(c, m): #current, max
 	var ratio = float(c) / m
-	region_rect = Rect2(0,0, textureSize.x*ratio, textureSize.y)
+	
+	region_rect = Rect2(0,0, int(textureSize.x*ratio), textureSize.y)
 	pass
 

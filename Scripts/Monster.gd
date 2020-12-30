@@ -4,6 +4,12 @@ extends KinematicBody2D
 const GRAVITY = 500
 const JUMPPOWER = 150
 
+
+export var damage = 3
+export var attackDelay = 300
+export var attackDistance = 20
+var lastAttackTime = 0
+
 var speedY = -100
 var speedX = 0
 
@@ -80,6 +86,17 @@ func _physics_process(delta: float) -> void:
 			get_node("Sprite").flip_h = true
 		else:
 			get_node("Sprite").flip_h = false
+
+
+	if (aggressive):
+		var playerPos = get_tree().get_root().get_node("Game/Player").position
+		print((playerPos - position).length())
+		if ((playerPos - position).length() < attackDistance):
+			var currentTime = OS.get_ticks_msec()
+			if (currentTime - lastAttackTime > attackDelay):
+				get_tree().get_root().get_node("Game/Player").hurt(damage)
+				lastAttackTime = currentTime
+
 
 	tookDamage = false
 
