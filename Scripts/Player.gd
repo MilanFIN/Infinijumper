@@ -33,7 +33,10 @@ var lastAttackTime = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hp = 0.5*maxHp
-	pass # Replace with function body.
+
+	
+
+
 
 func _physics_process(delta: float) -> void:
 	
@@ -48,17 +51,16 @@ func _physics_process(delta: float) -> void:
 	if (is_on_floor()):
 		speedY = 0
 
-
+	get_node("Attackray1").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
+	get_node("Attackray2").cast_to = Vector2(lastDirection*ATTACKDISTANCE, -ATTACKDISTANCE)
+	get_node("Attackray3").cast_to = Vector2(0, -ATTACKDISTANCE)
+	get_node("Attackray4").cast_to = Vector2(lastDirection*ATTACKDISTANCE, ATTACKDISTANCE)
+	get_node("Attackray5").cast_to = Vector2(0, ATTACKDISTANCE)
+	
 
 
 	get_node("Sprite").flip_h = facingLeft
 
-	get_node("Attackray1").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
-	get_node("Attackray2").cast_to = Vector2(lastDirection*ATTACKDISTANCE, -ATTACKDISTANCE)
-	get_node("Attackray3").cast_to = Vector2(0, -ATTACKDISTANCE)
-	
-	
-	
 	#animations
 	#attacking
 
@@ -92,7 +94,7 @@ func jump():
 func attack():
 	var currentTime = OS.get_ticks_msec()
 	if (currentTime - lastAttackTime > ATTACKDELAY):
-		for i in range(1,4):
+		for i in range(1,6):
 			var target = get_node("Attackray"+str(i)).get_collider()
 			if (target != null):
 				target.interact(damage)

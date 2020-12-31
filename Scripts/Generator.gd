@@ -20,6 +20,8 @@ func generateTileheights(x, cols):
 
 	var result = []
 	for i in range(x, x+cols):
-		result.push_back(noise.get_noise_1d(i) * 10)
+		result.push_back(int(noise.get_noise_1d(i) * 10))
+		
+	
 	return result
 

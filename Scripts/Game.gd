@@ -41,9 +41,9 @@ func _input(event):
 	if event is InputEventScreenDrag: 
 		directionalInput = true
 	if event is InputEventScreenTouch or event is InputEventScreenDrag:
-		if (abs(get_node("Hud/Base").position.y - (event.position.y - 120)) > 30):
+		if (abs(get_node("Hud/Base").position.y - (event.position.y - 120)) > 60):
 				directionalInput = false
-		if (abs(get_node("Hud/Base").position.x - (event.position.x - 210)) > 70):
+		if (abs(get_node("Hud/Base").position.x - (event.position.x - 210)) > 80):
 				directionalInput = false
 		if (not directionalInput and event.position.x < 210):
 			get_node("Hud/Stick").position = get_node("Hud/Base").position
