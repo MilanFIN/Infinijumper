@@ -3,11 +3,13 @@ extends KinematicBody2D
 
 const GRAVITY = 500
 const JUMPPOWER = 150
-
+const hurtAnimationTime = 0.15 #seconds
+const attackAnimationTime = 0.15 #seconds
 
 export var damage = 3
-export var attackDelay = 300
+export var attackDelay = 1000
 export var attackDistance = 20
+export var hp = 2
 var lastAttackTime = 0
 
 var speedY = -100
@@ -23,7 +25,8 @@ var aggressive = false
 var blockCastDistanceX = 20
 
 var tookDamage = false #took damage this game tick?
-
+var timeSinceHurt = 99999
+var timeSinceAttack = 99999
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -76,11 +79,11 @@ func _physics_process(delta: float) -> void:
 		timeSpentInDirection = 0
 
 
-	if (aggressive):
+	if (not aggressive):
 		if (dirX > 0):
-			get_node("Sprite").flip_h = true
-		else:
 			get_node("Sprite").flip_h = false
+		else:
+			get_node("Sprite").flip_h = true
 	else:
 		if (position.x > playerX):
 			get_node("Sprite").flip_h = true
@@ -90,12 +93,25 @@ func _physics_process(delta: float) -> void:
 
 	if (aggressive):
 		var playerPos = get_tree().get_root().get_node("Game/Player").position
-		print((playerPos - position).length())
+
 		if ((playerPos - position).length() < attackDistance):
 			var currentTime = OS.get_ticks_msec()
 			if (currentTime - lastAttackTime > attackDelay):
 				get_tree().get_root().get_node("Game/Player").hurt(damage)
 				lastAttackTime = currentTime
+				timeSinceAttack = 0
+
+
+	#animations
+	if (timeSinceAttack < attackAnimationTime):
+		timeSinceAttack += delta
+		get_node("Sprite").play("attack")
+	elif (timeSinceHurt < hurtAnimationTime):
+		timeSinceHurt += delta
+		get_node("Sprite").play("hurt")
+	else:
+		get_node("Sprite").play("run")
+
 
 
 	tookDamage = false
@@ -103,4 +119,8 @@ func _physics_process(delta: float) -> void:
 func interact(dmg):
 	if (not tookDamage):
 		tookDamage = true
-		queue_free()
+		hp -= dmg
+		timeSinceHurt = 0
+		print(hp)
+		if (hp <= 0):
+			queue_free()
