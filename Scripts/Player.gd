@@ -77,15 +77,17 @@ func _physics_process(delta: float) -> void:
 		get_node("Sprite").play("jump")
 	
 	xDirection = 0
-func moveLeft():
+
+
+func moveLeft(amount):
 	facingLeft = true
 	lastDirection = -1
-	xDirection = -1
+	xDirection = -amount
 
-func moveRight():
+func moveRight(amount):
 	facingLeft = false
 	lastDirection = 1
-	xDirection = 1
+	xDirection = amount
 
 func jump():
 	if (is_on_floor()):

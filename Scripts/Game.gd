@@ -1,6 +1,7 @@
 extends Node2D
 
 
+const MAXJOYSTICKMOVEMENT = 30
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -8,19 +9,23 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if (Input.is_action_pressed("left")):
-		get_node("Player").moveLeft()
+		get_node("Player").moveLeft(1)
 	if (Input.is_action_pressed("right")):
-		get_node("Player").moveRight()
+		get_node("Player").moveRight(1)
 	if (Input.is_action_just_pressed("jump")):
 		get_node("Player").jump()
 	if (Input.is_action_just_pressed("attack")):
 		get_node("Player").attack()
 
 	#handle joystick
-	if (get_node("Hud/Stick").position.x < get_node("Hud/Base").position.x):
-		get_node("Player").moveLeft()
-	if (get_node("Hud/Stick").position.x > get_node("Hud/Base").position.x):
-		get_node("Player").moveRight()
+	var basePos = get_node("Hud/Base").position.x
+	var stickPos = get_node("Hud/Stick").position.x
+	var dir = (stickPos - basePos) / MAXJOYSTICKMOVEMENT
+
+	if (dir < 0):
+		get_node("Player").moveLeft(abs(dir))
+	if (dir > 0):
+		get_node("Player").moveRight(abs(dir))
 
 	#update hud
 	var hp = get_node("Player").hp
@@ -50,7 +55,7 @@ func _input(event):
 		elif (directionalInput):
 			#finally can be sure that should record movement input
 			var stickPosition = event.position.x -210
-			stickPosition = clamp(stickPosition, get_node("Hud/Base").position.x-30, get_node("Hud/Base").position.x+30)
+			stickPosition = clamp(stickPosition, get_node("Hud/Base").position.x-MAXJOYSTICKMOVEMENT, get_node("Hud/Base").position.x+MAXJOYSTICKMOVEMENT)
 			get_node("Hud/Stick").position.x = stickPosition
 
 	if event is InputEventMouseButton:
