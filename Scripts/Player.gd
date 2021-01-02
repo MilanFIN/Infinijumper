@@ -113,6 +113,11 @@ func pickup(type, amount):
 		hp += amount
 		if (hp > maxHp):
 			hp = maxHp
+	elif (type == "armor"):
+		armor += amount
+		if (armor > maxArmor):
+			armor = maxArmor
+
 
 func hurt(damage):
 	#quake 3 style armor depleting, should work
