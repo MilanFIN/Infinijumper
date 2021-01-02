@@ -1,7 +1,6 @@
 extends Sprite
 
-var hp = 100
-var maxHp = 100
+
 var textureSize = Vector2(0,0)
 
 

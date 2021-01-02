@@ -31,7 +31,10 @@ func _process(delta: float) -> void:
 	var hp = get_node("Player").hp
 	var maxHp = get_node("Player").maxHp
 	get_node("Hud/Healthbar").setHp(hp, maxHp)
-
+	#TODO: change to use armor values
+	var armor = get_node("Player").armor
+	var maxArmor = get_node("Player").maxArmor
+	get_node("Hud/Armorbar").setHp(armor, maxArmor)
 
 
 

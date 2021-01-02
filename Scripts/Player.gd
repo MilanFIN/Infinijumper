@@ -22,7 +22,9 @@ var damage = 1
 
 var maxHp = 100
 var hp = 0
-var growDir = 1#temp
+var maxArmor = 100
+var armor = 0
+
 
 
 var lastAttackTime = 0
@@ -33,19 +35,15 @@ var lastAttackTime = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	hp = 0.5*maxHp
+	armor = 0.5*maxArmor
 
 	
 
 
 
 func _physics_process(delta: float) -> void:
-	
-	#if (hp < 0 or hp > maxHp):
-	#	growDir *= -1
-	#hp += growDir
 
 
-	
 	speedY +=  GRAVITY*delta
 	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
 	if (is_on_floor()):
@@ -117,4 +115,18 @@ func pickup(type, amount):
 			hp = maxHp
 
 func hurt(damage):
-	hp -= damage
+	#quake 3 style armor depleting, should work
+	var armorDamage = 2*damage/3.0
+	if (armor >= armorDamage):
+		armor -= armorDamage
+		hp -= damage/3.0
+	#if not enough armor, reduce the damage by 3/2*amount of armor left
+	#also works if armor == 0
+	elif (armor < armorDamage):
+		damage -= 1.5 * armor
+		hp -= damage
+		armor = 0
+
+	if (armor < 0):
+		armor = 0
+
