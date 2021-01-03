@@ -10,7 +10,9 @@ export var damage = 3
 export var attackDelay = 1000
 export var attackDistance = 20
 export var hp = 2
-var lastAttackTime = 0
+export var speed = 50
+
+
 
 var speedY = -100
 var speedX = 0
@@ -24,14 +26,15 @@ var aggressive = false
 
 var blockCastDistanceX = 20
 
+var lastAttackTime = 0
+
 var tookDamage = false #took damage this game tick?
 var timeSinceHurt = 99999
 var timeSinceAttack = 99999
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	speedX = rand_range(0, 70)
-	#speedX = 100
+	speedX = speed
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

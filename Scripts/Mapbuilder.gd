@@ -3,6 +3,7 @@ extends Node
 
 const TREEPROBABILITY = 0.05
 const MONSTERPROBABILITY = 0.1
+const MONSTERTHRESHOLDS = [0.5, 1]
 
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
@@ -67,10 +68,15 @@ func CreateMonsters():
 			localC.x += 1
 			var globalC = tilemap.map_to_world(localC)
 
-			var monsterFile = load("res://Actors/Monsters/Spider.tscn")
+			var monsterType = rand_range(0.0, 1.0)
+			var monsterName = ""
+			if (monsterType < MONSTERTHRESHOLDS[0]):
+				monsterName = "Spider"
+			elif (monsterType < MONSTERTHRESHOLDS[1]):
+				monsterName = "Orc"
+			var monsterFile = load("res://Actors/Monsters/"+monsterName+".tscn")
 			var monster = monsterFile.instance()
 			monster.position = globalC
-
 			get_parent().add_child(monster)
 		j += 1
 	pass
