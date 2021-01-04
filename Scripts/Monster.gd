@@ -11,7 +11,7 @@ export var attackDelay = 1000
 export var attackDistance = 20
 export var hp = 2
 export var speed = 50
-
+export var deathEffect = ""
 
 
 var speedY = -100
@@ -126,4 +126,9 @@ func interact(dmg):
 		timeSinceHurt = 0
 		print(hp)
 		if (hp <= 0):
+			if (deathEffect != ""):
+				var deathFile = load("res://Actors/Effects/"+deathEffect+".tscn")
+				var deathAnimation = deathFile.instance()
+				deathAnimation.position = position
+				get_parent().add_child(deathAnimation)
 			queue_free()
