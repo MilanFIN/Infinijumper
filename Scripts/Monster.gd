@@ -130,5 +130,7 @@ func interact(dmg):
 				var deathFile = load("res://Actors/Effects/"+deathEffect+".tscn")
 				var deathAnimation = deathFile.instance()
 				deathAnimation.position = position
+				if (get_node("Sprite").flip_h):
+					deathAnimation.flip()
 				get_parent().add_child(deathAnimation)
 			queue_free()
