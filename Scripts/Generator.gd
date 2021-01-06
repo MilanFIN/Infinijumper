@@ -10,6 +10,13 @@ var lastY = 0
 
 var offset = 0
 
+var biomeArray = ["forest", "mountain", "desert"]
+
+
+#TODO: only call mapbuilder when the last x tile reaches edge of screen
+#TODO: look at linear interpolation for transitions between biomes
+
+
 
 func _ready() -> void:
 	pass
@@ -48,22 +55,26 @@ func generateTileheights(x, cols):
 
 	var result = []
 	
-	var firstVal = int(noise.get_noise_1d(x) * multiplier)
+	var firstVal = int(noise.get_noise_1d(x) * multiplier+offset)
+
 	if (started and abs(firstVal - lastY) > 1):
-		offset = (lastY - firstVal)
+		offset += lastY - firstVal
+
 	
 	for i in range(x, x+cols):
 		var val = int(noise.get_noise_1d(i) * multiplier + offset)
+
+
 
 		result.push_back(val)
 		if (i == x+cols-1):
 			lastY = val
 			started = true
-	
 
-	var my_array = ["forest", "mountain", "desert"]
-	var biome = my_array[randi() % my_array.size()]
-	print(biome)
+
+
+	var biome = biomeArray[randi() % biomeArray.size()]
+
 	setBiome(biome)
 	return result
 
