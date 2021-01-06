@@ -1,5 +1,8 @@
 extends Node
 
+#amount of map that has to exist in front of player or trigger regen
+const MAPGENLEAD = 200 
+
 
 const TREEPROBABILITY = 0.05
 const MONSTERPROBABILITY = 0.1
@@ -26,7 +29,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var realLastTileX = get_node("TileMap").map_to_world(Vector2(lastTileX, 0)).x
 	var playerX = get_parent().get_node("Player").position.x
-	if (realLastTileX - playerX < 240):
+	if (realLastTileX - playerX < MAPGENLEAD):#240
 		populateTilemap()
 		print("populating")
 
@@ -87,8 +90,13 @@ func populateTilemap():
 	firstTileX = lastTileX
 
 	var tilemap = get_node("TileMap")
-	#tilemap.clear()
+
+	var biome = generator.getBiome()
 	mapHeightArray = generator.generateTileheights(lastTileX, 27)
+
+	print(biome)
+
+
 	#first iteration, so should ensure that ground is under player
 	if (tilemap.get_used_cells().size() == 0):
 		var tile = tilemap.world_to_map(get_parent().get_node("Player").position)
