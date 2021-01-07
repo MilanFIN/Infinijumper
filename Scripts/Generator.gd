@@ -3,10 +3,11 @@ extends Node
 
 
 var noise = OpenSimplexNoise.new()
-var multiplier = 10
+var valleyMultiplier = 10
+var hillMultiplier = 10
 
 
-var biomeArray = ["forest", "mountain", "desert"]
+var biomeArray = ["forest", "mountain", "desert", "swamp"]
 
 
 #TODO: only call mapbuilder when the last x tile reaches edge of screen
@@ -24,24 +25,34 @@ func _ready() -> void:
 
 func setBiome(biome):
 	if (biome == "forest"):
-		multiplier = 10
+		hillMultiplier = 10
+		valleyMultiplier = 10
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 20.0#20.0
 		noise.persistence = 0.5
 	elif (biome == "mountain"):
-		multiplier = 20
+		hillMultiplier = 30
+		valleyMultiplier = 5
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 20.0#20.0
 		noise.persistence = 0.5
+
 	elif (biome == "desert"):
-		multiplier = 10
+		hillMultiplier = 10
+		valleyMultiplier = 10
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 64
 		noise.persistence = 0.5
-
+	elif (biome == "swamp"):
+		hillMultiplier = 2
+		valleyMultiplier = 4
+		noise.octaves = 2#2
+		noise.lacunarity = 2.0
+		noise.period = 5
+		noise.persistence = 0.5
 
 func init():
 	#noise.octaves = 2#2
@@ -50,9 +61,9 @@ func init():
 	#noise.persistence = 0.5
 	randomize()
 	noise.seed = randi()
-	setBiome("mountain")
-	lastBiome = "mountain"
-	biome = "mountain"
+	setBiome("swamp")
+	lastBiome = "swamp"
+	biome = "swamp"
 
 #returns the biome that is generated  by the next generateTileHeights call
 func getBiome():
@@ -63,14 +74,25 @@ func generateTileheights(x, cols):
 	var result = []
 	nextBiome = biomeArray[randi() % biomeArray.size()]
 	setBiome(nextBiome)
-	nextHeight = int(noise.get_noise_1d(x+cols-1) * multiplier)
+	var nextVal = noise.get_noise_1d(x+cols)
+	if (nextVal < 0):
+		nextHeight = int(nextVal* hillMultiplier)
+	elif (nextVal > 0):
+		nextHeight = int(nextVal* valleyMultiplier)
+	nextHeight = 0
 	setBiome(biome)
 
 	for i in range(x, x+cols):
 		var val = 0
+
+		var unintVal = noise.get_noise_1d(i)
+		if (unintVal < 0):
+			unintVal = int(unintVal* hillMultiplier)
+		elif (unintVal > 0):
+			unintVal = int(unintVal* valleyMultiplier)
+
 		#must interpolate at beginning of each biome if next is different
 		if (i < x+5 and biome != lastBiome):
-			var unintVal = int(noise.get_noise_1d(i) * multiplier)
 			if (i < x+1):
 				val = (lastHeight*5 +unintVal*1) / 6
 			elif (i < x+2):
@@ -83,7 +105,7 @@ func generateTileheights(x, cols):
 				val = (lastHeight*1 +unintVal*5) / 6
 		#must interpolate at end of each biome, if next is different
 		elif (i >= x+cols-5 and biome != nextBiome):
-			var unintVal = int(noise.get_noise_1d(i) * multiplier)
+
 			if (i < x+cols-4):
 				val = (nextHeight*1 +unintVal*5) / 6
 			elif (i < x+cols -3):
@@ -95,16 +117,14 @@ func generateTileheights(x, cols):
 			elif (i < x+cols -0):
 				val = (nextHeight*5 +unintVal*1) / 6
 		else:
-			val = int(noise.get_noise_1d(i) * multiplier)
-			#if (biome == "mountain"):
-			#	if (val > 0):
-			#		val *= -1
+			val = unintVal
+
 
 		result.push_back(val)
 		
 		#must store last value as lastheight
 		if (i == x+cols -1):
-			lastHeight = val
+			lastHeight = 0#val
 
 	lastBiome = biome
 	biome = nextBiome
@@ -124,11 +144,11 @@ var offset = 0
 func generateTileHeights_old(x, cols):
 
 	var result = []
-	var firstVal = int(noise.get_noise_1d(x) * multiplier+offset)
+	var firstVal = int(noise.get_noise_1d(x) * hillMultiplier+offset)
 	if (started and abs(firstVal - lastY) > 1):
 		offset += lastY - firstVal
 	for i in range(x, x+cols):
-		var val = int(noise.get_noise_1d(i) * multiplier + offset)
+		var val = int(noise.get_noise_1d(i) * hillMultiplier + offset)
 
 		result.push_back(val)
 		if (i == x+cols-1):

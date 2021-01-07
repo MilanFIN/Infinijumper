@@ -92,22 +92,29 @@ func setColumn(tilemap, x, height, biome):
 		for filler in range(firstBelowSurface, firstBelowSurface + 22):
 			tilemap.set_cell(lastTileX, filler, 0)
 	if (biome == "desert"):
-		for surface in range(height, height + 6):
-			tilemap.set_cell(lastTileX, surface, 2)
-			tilemap.set_cell(lastTileX, surface, 2)
-			tilemap.set_cell(lastTileX, surface, 2)
+		tilemap.set_cell(lastTileX, height, 2)
 		var firstBelowSurface = height+1
-		for filler in range(height + 6, height + 23):
-			tilemap.set_cell(lastTileX, filler, 3)
+		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+			tilemap.set_cell(lastTileX, filler, 2)
 	if (biome == "mountain"):
-		if (height - yOffset < -1):
-
+		if (height - yOffset < -3):
 			tilemap.set_cell(lastTileX, height, 4)
 		else:
 			tilemap.set_cell(lastTileX, height, 3)
 		var firstBelowSurface = height+1
 		for filler in range(firstBelowSurface, firstBelowSurface + 22):
 			tilemap.set_cell(lastTileX, filler, 3)
+	if (biome == "swamp"):
+		tilemap.set_cell(lastTileX, height, 5)
+		var firstBelowSurface = height+1
+		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+			tilemap.set_cell(lastTileX, filler, 5)
+		var y = yOffset
+		while (true):
+			if (tilemap.get_cell(lastTileX, y) != -1):
+				break
+			tilemap.set_cell(lastTileX, y, 6)
+			y += 1
 
 func populateTilemap():
 
