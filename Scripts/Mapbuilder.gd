@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 	var playerX = get_parent().get_node("Player").position.x
 	if (realLastTileX - playerX < MAPGENLEAD):#240
 		populateTilemap()
-		print("populating")
+
 
 
 func CreateDestroyables():
@@ -85,17 +85,38 @@ func CreateMonsters():
 	pass
 
 
+func setColumn(tilemap, x, height, biome):
+	if (biome == "forest"):
+		tilemap.set_cell(lastTileX, height, 1)
+		var firstBelowSurface = height+1
+		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+			tilemap.set_cell(lastTileX, filler, 0)
+	if (biome == "desert"):
+		for surface in range(height, height + 6):
+			tilemap.set_cell(lastTileX, surface, 2)
+			tilemap.set_cell(lastTileX, surface, 2)
+			tilemap.set_cell(lastTileX, surface, 2)
+		var firstBelowSurface = height+1
+		for filler in range(height + 6, height + 23):
+			tilemap.set_cell(lastTileX, filler, 3)
+	if (biome == "mountain"):
+		if (height - yOffset < -1):
+
+			tilemap.set_cell(lastTileX, height, 4)
+		else:
+			tilemap.set_cell(lastTileX, height, 3)
+		var firstBelowSurface = height+1
+		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+			tilemap.set_cell(lastTileX, filler, 3)
+
 func populateTilemap():
 
 	firstTileX = lastTileX
-
 	var tilemap = get_node("TileMap")
-
 	var biome = generator.getBiome()
 	mapHeightArray = generator.generateTileheights(lastTileX, 27)
 
 	print(biome)
-
 
 	#first iteration, so should ensure that ground is under player
 	if (tilemap.get_used_cells().size() == 0):
@@ -103,13 +124,9 @@ func populateTilemap():
 		yOffset = yOffset- mapHeightArray[tile.x]
 
 
-
-
 	for x in range(len(mapHeightArray)):
-		tilemap.set_cell(lastTileX, mapHeightArray[x]+yOffset, 1)
-		var firstBelowSurface = mapHeightArray[x]+yOffset+1
-		for filler in range(firstBelowSurface, firstBelowSurface + 22):
-			tilemap.set_cell(lastTileX, filler, 0)
+		setColumn(tilemap, lastTileX, mapHeightArray[x]+yOffset, biome)
+
 		lastTileX += 1
 
 

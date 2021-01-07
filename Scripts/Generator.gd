@@ -50,9 +50,9 @@ func init():
 	#noise.persistence = 0.5
 	randomize()
 	noise.seed = randi()
-	setBiome("forest")
-	lastBiome = "forest"
-	biome = "forest"
+	setBiome("mountain")
+	lastBiome = "mountain"
+	biome = "mountain"
 
 #returns the biome that is generated  by the next generateTileHeights call
 func getBiome():
@@ -96,6 +96,9 @@ func generateTileheights(x, cols):
 				val = (nextHeight*5 +unintVal*1) / 6
 		else:
 			val = int(noise.get_noise_1d(i) * multiplier)
+			#if (biome == "mountain"):
+			#	if (val > 0):
+			#		val *= -1
 
 		result.push_back(val)
 		
