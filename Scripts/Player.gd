@@ -47,7 +47,6 @@ func _physics_process(delta: float) -> void:
 	if (inWater()):
 		gravity *= 0.1
 
-
 	speedY +=  gravity*delta
 	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
 	if (is_on_floor()):

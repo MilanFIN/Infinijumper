@@ -11,7 +11,9 @@ func _ready() -> void:
 
 func inWater():
 	var tilemap = get_tree().get_root().get_node("Game/Mapbuilder/TileMap")
-	var tilemapPos = tilemap.world_to_map(position)
+	var footPosition = get_node("Feet").get_global_position()
+
+	var tilemapPos = tilemap.world_to_map(footPosition)
 	if (tilemap.get_cell(tilemapPos.x, tilemapPos.y) != -1):
 		#we are in a tile, so probably in water
 		return true

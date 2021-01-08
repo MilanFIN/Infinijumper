@@ -1,6 +1,6 @@
-extends KinematicBody2D
+extends Actor
 
-const GRAVITY = 500
+
 
 export var type = ""
 export var amount = 0
@@ -17,10 +17,13 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if(not is_on_floor()):
-		speedY += delta*GRAVITY
-		move_and_slide(Vector2(speedX, speedY))
+		var gravity = GRAVITY
+		if (inWater()):
+			gravity *= 0.1
+		speedY += delta*gravity
+		move_and_slide(Vector2(speedX, speedY), Vector2.UP)
 
-	if (is_on_wall()):
+	if (is_on_wall() and not(is_on_floor())):
 		speedX *= -1
 
 
