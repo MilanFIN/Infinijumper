@@ -1,7 +1,7 @@
-extends KinematicBody2D
+extends Actor
 
 
-const GRAVITY = 500
+
 const JUMPPOWER = 150
 const hurtAnimationTime = 0.15 #seconds
 const attackAnimationTime = 0.15 #seconds
@@ -42,7 +42,11 @@ func _physics_process(delta: float) -> void:
 	
 	var previousDir = dirX
 	
-	speedY += delta*GRAVITY
+	var gravity = GRAVITY
+	if (inWater()):
+		gravity *= 0.1
+	
+	speedY += delta*gravity
 
 	move_and_slide(Vector2(speedX*dirX, speedY), Vector2.UP)
 
@@ -134,3 +138,4 @@ func interact(dmg):
 					deathAnimation.flip()
 				get_parent().add_child(deathAnimation)
 			queue_free()
+

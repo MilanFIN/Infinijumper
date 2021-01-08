@@ -1,9 +1,9 @@
-extends KinematicBody2D
+extends Actor
 
 
 
-const GRAVITY = 500
-const JUMPPOWER = 300
+
+var JUMPPOWER = 300
 const ATTACKDISTANCE = 25
 const ATTACKDELAY = 300 #ms
 
@@ -43,8 +43,12 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 
+	var gravity = GRAVITY
+	if (inWater()):
+		gravity *= 0.1
 
-	speedY +=  GRAVITY*delta
+
+	speedY +=  gravity*delta
 	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
 	if (is_on_floor()):
 		speedY = 0
@@ -134,4 +138,3 @@ func hurt(damage):
 
 	if (armor < 0):
 		armor = 0
-
