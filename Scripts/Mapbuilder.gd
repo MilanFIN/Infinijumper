@@ -116,8 +116,19 @@ func setColumn(tilemap, x, height, biome):
 			tilemap.set_cell(lastTileX, y, 6)
 			y += 1
 
-func populateTilemap():
 
+func clearPastTiles():
+	var tilemap = get_node("TileMap")
+	var cameraLeftPoint = get_parent().get_node("Cameramount").position
+	cameraLeftPoint.x -= 320
+	var lastVisiblePoint = tilemap.world_to_map(cameraLeftPoint)
+	var allVisibleTiles = tilemap.get_used_cells()
+
+	for i in allVisibleTiles:
+		if (i.x < lastVisiblePoint.x):
+			tilemap.set_cell(i.x, i.y, -1)
+
+func createTiles():
 	firstTileX = lastTileX
 	var tilemap = get_node("TileMap")
 	var biome = generator.getBiome()
@@ -137,20 +148,11 @@ func populateTilemap():
 		lastTileX += 1
 
 
-	#TODO: FIX BY USING GET_USED_CELLS, and remove from those instead
-	#using currentTileY remove everything from screen point 0 backwards
-	var cameraLeftPoint = get_parent().get_node("Cameramount").position
-	cameraLeftPoint.x -= 320
-	var lastVisiblePoint = tilemap.world_to_map(cameraLeftPoint)
-	#should be removing the first invinsible one
-	lastVisiblePoint.x -= 1
-	lastVisiblePoint.y = yOffset
-	for i in range(0, 100):#45 might be enough
-		for j in range(0, 100):
-			tilemap.set_cell(lastVisiblePoint.x - i, j, -1)
-			tilemap.set_cell(lastVisiblePoint.x -i, -j, -1)
-	
-	
+
+func populateTilemap():
+
+	createTiles()
+	clearPastTiles()
 	#add trees etc
 	CreateDestroyables()
 	CreateMonsters()

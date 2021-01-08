@@ -2,12 +2,28 @@ extends KinematicBody2D
 class_name Actor
 
 const GRAVITY = 500
-
+const WATERTOPSPEED = 100
+var speedY = 0
+var speedX = 0
+var xDirection = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
+
+
+func move(delta):
+	var gravity = GRAVITY
+	if (inWater()):
+		gravity *= 0.1
+		speedY = clamp(speedY, -WATERTOPSPEED, WATERTOPSPEED)
+
+
+	speedY +=  gravity*delta
+	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
+	if (is_on_floor()):
+		speedY = 0
 
 func inWater():
 	var tilemap = get_tree().get_root().get_node("Game/Mapbuilder/TileMap")

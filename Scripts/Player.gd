@@ -11,11 +11,11 @@ var slashFile = load("res://Actors/Effects/Slash.tscn")
 
 
 
-var xDirection = 0
+
 #stores the previous direction even if xdirection =0
 var lastDirection = 1
-var speedX = 100
-var speedY = 0
+
+
 var facingLeft = false
 
 var damage = 1
@@ -36,21 +36,16 @@ var lastAttackTime = 0
 func _ready() -> void:
 	hp = 0.5*maxHp
 	armor = 0.5*maxArmor
-
+	speedX = 100
 	
 
 
 
 func _physics_process(delta: float) -> void:
 
-	var gravity = GRAVITY
-	if (inWater()):
-		gravity *= 0.1
 
-	speedY +=  gravity*delta
-	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
-	if (is_on_floor()):
-		speedY = 0
+	move(delta)
+
 
 	get_node("Attackray1").cast_to = Vector2(lastDirection*ATTACKDISTANCE, 0)
 	get_node("Attackray2").cast_to = Vector2(lastDirection*ATTACKDISTANCE, -ATTACKDISTANCE)

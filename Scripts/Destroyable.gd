@@ -11,7 +11,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if (hp <= 0):
 		if (drop != ""):
-			print("should drop something")
+
 			var dropFile = load("res://Actors/Drops/"+drop+".tscn")
 			var dropInstance = dropFile.instance()
 			dropInstance.position = position

@@ -14,10 +14,8 @@ export var speed = 50
 export var deathEffect = ""
 
 
-var speedY = -100
-var speedX = 0
 
-var dirX = 1
+
 var timeSpentInDirection = 0
 var maxTimeUntilDirChange = 2
 var minTimeUntilDirChange = 0.5
@@ -35,13 +33,16 @@ var timeSinceAttack = 99999
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	speedX = speed
-
+	speedY = -100
+	xDirection = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	
-	var previousDir = dirX
+	var previousDir = xDirection
 	
+	move(delta)
+	"""
 	var gravity = GRAVITY
 	if (inWater()):
 		gravity *= 0.1
@@ -49,9 +50,8 @@ func _physics_process(delta: float) -> void:
 	speedY += delta*gravity
 
 	move_and_slide(Vector2(speedX*dirX, speedY), Vector2.UP)
-
+	"""
 	if (is_on_floor()):
-		speedY = 0
 
 		var blockage = get_node("Blockageray").get_collider()
 		
@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 
 	if (not aggressive):
 		if (timeSpentInDirection > maxTimeUntilDirChange):
-			dirX *= -1
+			xDirection *= -1
 
 
 
@@ -75,19 +75,19 @@ func _physics_process(delta: float) -> void:
 
 	if (aggressive and timeSpentInDirection > minTimeUntilDirChange):
 		if (playerX < position.x):
-			dirX = -1
+			xDirection = -1
 		else:
-			dirX = 1
+			xDirection = 1
 		
-	get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*dirX, 0)
+	get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*xDirection, 0)
 
 
-	if (dirX != previousDir):
+	if (xDirection != previousDir):
 		timeSpentInDirection = 0
 
 
 	if (not aggressive):
-		if (dirX > 0):
+		if (xDirection > 0):
 			get_node("Sprite").flip_h = false
 		else:
 			get_node("Sprite").flip_h = true
@@ -128,7 +128,7 @@ func interact(dmg):
 		tookDamage = true
 		hp -= dmg
 		timeSinceHurt = 0
-		print(hp)
+
 		if (hp <= 0):
 			if (deathEffect != ""):
 				var deathFile = load("res://Actors/Effects/"+deathEffect+".tscn")
