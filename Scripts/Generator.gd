@@ -5,6 +5,7 @@ extends Node
 var noise = OpenSimplexNoise.new()
 var valleyMultiplier = 10
 var hillMultiplier = 10
+var floorLevel = 0 # float from -1 to 1, -1 is high, 1 low
 
 
 var biomeArray = ["forest", "mountain", "desert", "swamp"]
@@ -27,13 +28,15 @@ func setBiome(biome):
 	if (biome == "forest"):
 		hillMultiplier = 10
 		valleyMultiplier = 10
+		floorLevel = 0.0
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 20.0#20.0
 		noise.persistence = 0.5
 	elif (biome == "mountain"):
-		hillMultiplier = 30
-		valleyMultiplier = 5
+		hillMultiplier = 15
+		valleyMultiplier = 10
+		floorLevel = -1.0
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 20.0#20.0
@@ -42,6 +45,7 @@ func setBiome(biome):
 	elif (biome == "desert"):
 		hillMultiplier = 10
 		valleyMultiplier = 10
+		floorLevel = 0.0
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 64
@@ -49,6 +53,7 @@ func setBiome(biome):
 	elif (biome == "swamp"):
 		hillMultiplier = 2
 		valleyMultiplier = 4
+		floorLevel = 0.0
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 5
@@ -73,19 +78,15 @@ func getBiome():
 func generateTileheights(x, cols):
 	var result = []
 	nextBiome = biomeArray[randi() % biomeArray.size()]
-	setBiome(nextBiome)
-	var nextVal = noise.get_noise_1d(x+cols)
-	if (nextVal < 0):
-		nextHeight = int(nextVal* hillMultiplier)
-	elif (nextVal > 0):
-		nextHeight = int(nextVal* valleyMultiplier)
-	nextHeight = 0
-	setBiome(biome)
+
+
+
 
 	for i in range(x, x+cols):
 		var val = 0
 
 		var unintVal = noise.get_noise_1d(i)
+		unintVal += floorLevel
 		if (unintVal < 0):
 			unintVal = int(unintVal* hillMultiplier)
 		elif (unintVal > 0):
