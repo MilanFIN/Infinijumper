@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 //didnt work
 //uniform vec4 waterColorModulator = vec4(1.0,1.0,1.0,0.5); //0.5
-uniform float speed = 0.1;
+uniform float speed = 0.2;
 
 
 void fragment(){
