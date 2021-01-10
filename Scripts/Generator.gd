@@ -11,11 +11,11 @@ var floorLevel = 0 # float from -1 to 1, -1 is high, 1 low
 var biomeArray = ["forest", "mountain", "desert", "swamp", "lake"]
 
 var biomeTransitions = {
-	"forest": ["forest", "mountain", "desert", "swamp", "lake"],
-	"mountain": ["mountain", "forest"],
-	"desert": ["desert", "forest", "lake"],
-	"swamp": ["swamp", "forest"],
-	"lake": ["lake", "forest", "desert"]
+	"forest": [[0.25,"forest"], [0.50,"mountain"], [0.65,"desert"], [0.80,"swamp"], [1.0, "lake"]],
+	"mountain": [[0.5, "mountain"], [1.0,"forest"]],
+	"desert": [[0.4, "desert"], [0.70, "forest"] ,[1.0,"lake"]],
+	"swamp": [[0.5, "swamp"], [1.0, "forest"]],
+	"lake": [[0.3, "lake"], [0.65, "forest"], [1.0, "desert"]]
 }
 
 #TODO: only call mapbuilder when the last x tile reaches edge of screen
@@ -30,6 +30,19 @@ var nextHeight = 0
 
 func _ready() -> void:
 	pass
+
+
+
+func init():
+	#noise.octaves = 2#2
+	#noise.lacunarity = 2
+	#noise.period = 20#20.0#20.0
+	#noise.persistence = 0.5
+	randomize()
+	noise.seed = randi()
+	setBiome("forest")
+	lastBiome = "forest"
+	biome = "forest"
 
 func setBiome(biome):
 	if (biome == "forest"):
@@ -74,16 +87,6 @@ func setBiome(biome):
 		noise.period = 5
 		noise.persistence = 0.5
 
-func init():
-	#noise.octaves = 2#2
-	#noise.lacunarity = 2
-	#noise.period = 20#20.0#20.0
-	#noise.persistence = 0.5
-	randomize()
-	noise.seed = randi()
-	setBiome("lake")
-	lastBiome = "lake"
-	biome = "lake"
 
 #returns the biome that is generated  by the next generateTileHeights call
 func getBiome():
@@ -92,7 +95,13 @@ func getBiome():
 #generates new heightmap and changes biome
 func generateTileheights(x, cols):
 	var result = []
-	nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
+	
+	var biomeProbability = rand_range(0.0, 1.0)
+	for i in (biomeTransitions[biome]):
+		if (biomeProbability <= i[0]):
+			nextBiome = i[1]
+			break
+	#nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
 
 
 
@@ -144,7 +153,15 @@ func generateTileheights(x, cols):
 
 	lastBiome = biome
 	biome = nextBiome
-	nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
+	
+	
+	biomeProbability = rand_range(0.0, 1.0)
+	for i in (biomeTransitions[biome]):
+		if (biomeProbability <= i[0]):
+			nextBiome = i[1]
+			break
+	
+	#nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
 	setBiome(biome)
 
 	return result

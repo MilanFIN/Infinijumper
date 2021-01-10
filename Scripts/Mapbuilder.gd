@@ -144,7 +144,7 @@ func createTiles():
 	var biome = generator.getBiome()
 	mapHeightArray = generator.generateTileheights(lastTileX, 27)
 
-	print(biome)
+
 
 	#first iteration, so should ensure that ground is under player
 	if (tilemap.get_used_cells().size() == 0):
