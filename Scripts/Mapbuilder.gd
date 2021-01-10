@@ -115,7 +115,17 @@ func setColumn(tilemap, x, height, biome):
 				break
 			tilemap.set_cell(lastTileX, y, 6)
 			y += 1
-
+	if (biome == "lake"):
+		tilemap.set_cell(lastTileX, height, 2)
+		var firstBelowSurface = height+1
+		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+			tilemap.set_cell(lastTileX, filler, 2)
+		var y = yOffset
+		while (true):
+			if (tilemap.get_cell(lastTileX, y) != -1):
+				break
+			tilemap.set_cell(lastTileX, y, 6)
+			y += 1
 
 func clearPastTiles():
 	var tilemap = get_node("TileMap")

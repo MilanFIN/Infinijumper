@@ -8,8 +8,15 @@ var hillMultiplier = 10
 var floorLevel = 0 # float from -1 to 1, -1 is high, 1 low
 
 
-var biomeArray = ["forest", "mountain", "desert", "swamp"]
+var biomeArray = ["forest", "mountain", "desert", "swamp", "lake"]
 
+var biomeTransitions = {
+	"forest": ["forest", "mountain", "desert", "swamp", "lake"],
+	"mountain": ["mountain", "forest"],
+	"desert": ["desert", "forest", "lake"],
+	"swamp": ["swamp", "forest"],
+	"lake": ["lake", "forest", "desert"]
+}
 
 #TODO: only call mapbuilder when the last x tile reaches edge of screen
 #TODO: look at linear interpolation for transitions between biomes
@@ -26,16 +33,16 @@ func _ready() -> void:
 
 func setBiome(biome):
 	if (biome == "forest"):
-		hillMultiplier = 10
-		valleyMultiplier = 10
-		floorLevel = 0.0
+		hillMultiplier = 7
+		valleyMultiplier = 7
+		floorLevel = -0.5
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 20.0#20.0
 		noise.persistence = 0.5
 	elif (biome == "mountain"):
 		hillMultiplier = 15
-		valleyMultiplier = 10
+		valleyMultiplier = 0
 		floorLevel = -1.0
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
@@ -43,9 +50,9 @@ func setBiome(biome):
 		noise.persistence = 0.5
 
 	elif (biome == "desert"):
-		hillMultiplier = 10
-		valleyMultiplier = 10
-		floorLevel = 0.0
+		hillMultiplier = 5
+		valleyMultiplier = 5
+		floorLevel = -0.5
 		noise.octaves = 2#2
 		noise.lacunarity = 2.0
 		noise.period = 64
@@ -58,6 +65,14 @@ func setBiome(biome):
 		noise.lacunarity = 2.0
 		noise.period = 5
 		noise.persistence = 0.5
+	elif (biome == "lake"):
+		hillMultiplier = 0
+		valleyMultiplier = 3
+		floorLevel = 1.0
+		noise.octaves = 2#2
+		noise.lacunarity = 2.0
+		noise.period = 5
+		noise.persistence = 0.5
 
 func init():
 	#noise.octaves = 2#2
@@ -66,9 +81,9 @@ func init():
 	#noise.persistence = 0.5
 	randomize()
 	noise.seed = randi()
-	setBiome("swamp")
-	lastBiome = "swamp"
-	biome = "swamp"
+	setBiome("lake")
+	lastBiome = "lake"
+	biome = "lake"
 
 #returns the biome that is generated  by the next generateTileHeights call
 func getBiome():
@@ -77,7 +92,7 @@ func getBiome():
 #generates new heightmap and changes biome
 func generateTileheights(x, cols):
 	var result = []
-	nextBiome = biomeArray[randi() % biomeArray.size()]
+	nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
 
 
 
@@ -129,7 +144,7 @@ func generateTileheights(x, cols):
 
 	lastBiome = biome
 	biome = nextBiome
-	nextBiome = biomeArray[randi() % biomeArray.size()]
+	nextBiome = biomeTransitions[biome][randi() % biomeTransitions[biome].size()]
 	setBiome(biome)
 
 	return result
