@@ -6,39 +6,39 @@
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 16, 16 )
+region = Rect2( 16, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 16, 0, 16, 16 )
+region = Rect2( 0, 16, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 16, 16, 16, 16 )
+region = Rect2( 0, 0, 16, 16 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 2 )
-region = Rect2( 0, 16, 16, 16 )
+region = Rect2( 16, 0, 16, 16 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ) ],
-"loop": true,
-"name": "run",
-"speed": 4.0
-}, {
-"frames": [ SubResource( 3 ) ],
+"frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "attack",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 4 ) ],
+"frames": [ SubResource( 2 ) ],
 "loop": true,
 "name": "hurt",
 "speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "run",
+"speed": 4.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=6]
@@ -51,6 +51,7 @@ collision_mask = 2
 script = ExtResource( 1 )
 speed = 30
 deathEffect = "Orceffect"
+drop = "Shield"
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -8 )

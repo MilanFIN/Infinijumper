@@ -12,7 +12,7 @@ export var attackDistance = 20
 export var hp = 2
 export var speed = 50
 export var deathEffect = ""
-
+export var drop = ""
 
 
 
@@ -42,15 +42,7 @@ func _physics_process(delta: float) -> void:
 	var previousDir = xDirection
 	
 	move(delta)
-	"""
-	var gravity = GRAVITY
-	if (inWater()):
-		gravity *= 0.1
-	
-	speedY += delta*gravity
 
-	move_and_slide(Vector2(speedX*dirX, speedY), Vector2.UP)
-	"""
 	if (is_on_floor()):
 
 		var blockage = get_node("Blockageray").get_collider()
@@ -137,5 +129,13 @@ func interact(dmg):
 				if (get_node("Sprite").flip_h):
 					deathAnimation.flip()
 				get_parent().add_child(deathAnimation)
-			queue_free()
 
+
+			if (drop != ""):
+
+				var dropFile = load("res://Actors/Drops/"+drop+".tscn")
+				var dropInstance = dropFile.instance()
+				dropInstance.position = position
+
+				get_parent().add_child(dropInstance)
+			queue_free()

@@ -7,7 +7,7 @@ const MAPGENLEAD = 200
 const TREEPROBABILITY = 0.05
 const MONSTERPROBABILITY = 0.1
 const MONSTERTHRESHOLDS = [0.5, 1]
-const ENTITYTHRESHOLDS = [0.5, 1]
+const ENTITYTHRESHOLDS = [0.33, 0.66,  1]
 
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
@@ -48,18 +48,20 @@ func CreateDestroyables():
 			localC.y += yOffset
 			localC.x += 1
 			var globalC = tilemap.map_to_world(localC)
-
 			var entityType = rand_range(0.0, 1.0)
 			var entityName = ""
 			if (entityType < ENTITYTHRESHOLDS[0]):
 				entityName = "Tree"
 			elif (entityType < ENTITYTHRESHOLDS[1]):
+				entityName = "Seaweed"
+			elif (entityType < ENTITYTHRESHOLDS[2]):
 				entityName = "Cactus"
 
 
 			var entityFile = load("res://Actors/Destroyables/"+entityName+".tscn")
 			var entity = entityFile.instance()
 			entity.position = globalC
+
 
 			get_parent().add_child(entity)
 		j += 1
