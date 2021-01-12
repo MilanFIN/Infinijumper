@@ -53,9 +53,9 @@ func CreateDestroyables():
 			if (entityType < ENTITYTHRESHOLDS[0]):
 				entityName = "Tree"
 			elif (entityType < ENTITYTHRESHOLDS[1]):
-				entityName = "Seaweed"
+				entityName = "Twig"
 			elif (entityType < ENTITYTHRESHOLDS[2]):
-				entityName = "Cactus"
+				entityName = "Twig"
 
 
 			var entityFile = load("res://Actors/Destroyables/"+entityName+".tscn")
