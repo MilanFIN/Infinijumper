@@ -46,22 +46,21 @@ func CreateDestroyables():
 			var y = mapHeightArray[j]
 			var localC = Vector2(i, y)
 			localC.y += yOffset
-			localC.x += 1
 			var globalC = tilemap.map_to_world(localC)
 			var entityType = rand_range(0.0, 1.0)
 			var entityName = ""
 			if (entityType < ENTITYTHRESHOLDS[0]):
-				entityName = "Tree"
+				entityName = "Moss"
 			elif (entityType < ENTITYTHRESHOLDS[1]):
-				entityName = "Twig"
+				entityName = "Moss"
 			elif (entityType < ENTITYTHRESHOLDS[2]):
-				entityName = "Twig"
+				entityName = "Moss"
 
 
 			var entityFile = load("res://Actors/Destroyables/"+entityName+".tscn")
 			var entity = entityFile.instance()
 			entity.position = globalC
-
+			entity.position.x += 8
 
 			get_parent().add_child(entity)
 		j += 1
@@ -79,7 +78,6 @@ func CreateMonsters():
 			var y = mapHeightArray[j]
 			var localC = Vector2(i, y)
 			localC.y += yOffset
-			localC.x += 1
 			var globalC = tilemap.map_to_world(localC)
 
 			var monsterType = rand_range(0.0, 1.0)
@@ -91,6 +89,7 @@ func CreateMonsters():
 			var monsterFile = load("res://Actors/Monsters/"+monsterName+".tscn")
 			var monster = monsterFile.instance()
 			monster.position = globalC
+			monster.position.x += 8
 			get_parent().add_child(monster)
 		j += 1
 	pass
