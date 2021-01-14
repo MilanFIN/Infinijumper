@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Graphics/Hud/attack_pressed.png" type="Texture" id=12]
 [ext_resource path="res://Graphics/Hud/jump_pressed.png" type="Texture" id=13]
 [ext_resource path="res://Actors/Hud/Armorbar.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Actors/Hud/Airbar.tscn" type="PackedScene" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 56, 288 )
@@ -77,8 +78,11 @@ pressed = ExtResource( 12 )
 action = "attack"
 
 [node name="Healthbar" parent="Hud" instance=ExtResource( 8 )]
-position = Vector2( -202, -112 )
+position = Vector2( -194, -104 )
 z_index = -10
 
 [node name="Armorbar" parent="Hud" instance=ExtResource( 14 )]
-position = Vector2( -202, -88 )
+position = Vector2( -194, -84 )
+
+[node name="Airbar" parent="Hud" instance=ExtResource( 15 )]
+position = Vector2( -194, -64 )

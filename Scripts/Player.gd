@@ -7,6 +7,10 @@ var JUMPPOWER = 300
 const ATTACKDISTANCE = 25
 const ATTACKDELAY = 300 #ms
 
+const DROWNSPEED = 12.0
+const DROWNDAMAGE = 3.0
+
+
 var slashFile = load("res://Actors/Effects/Slash.tscn")
 
 
@@ -24,6 +28,9 @@ var maxHp = 100
 var hp = 0
 var maxArmor = 100
 var armor = 0
+var air = 0
+var maxAir = 100
+
 
 
 
@@ -36,6 +43,7 @@ var lastAttackTime = 0
 func _ready() -> void:
 	hp = 0.5*maxHp
 	armor = 0.5*maxArmor
+	air = maxAir
 	speedX = 100
 	
 
@@ -73,6 +81,14 @@ func _physics_process(delta: float) -> void:
 		get_node("Sprite").play("jump")
 	
 	xDirection = 0
+	
+	if (submerged()):
+		air -= delta*DROWNSPEED
+		if (air <= 0):
+			air = 0
+			hp -= delta*DROWNDAMAGE
+	else:
+		air = maxAir
 
 
 func moveLeft(amount):
@@ -132,3 +148,12 @@ func hurt(damage):
 
 	if (armor < 0):
 		armor = 0
+
+func submerged():
+	var tilemap = get_tree().get_root().get_node("Game/Mapbuilder/TileMap")
+	var tilemapPos = tilemap.world_to_map(position)
+	if (tilemap.get_cell(tilemapPos.x, tilemapPos.y) != -1):
+		#we are in a tile, so probably in water
+		return true
+	else:
+		return false

@@ -4,10 +4,10 @@ extends Node
 const MAPGENLEAD = 200 
 
 
-const TREEPROBABILITY = 0.05
+const TREEPROBABILITY = 0.1
 const MONSTERPROBABILITY = 0.1
 const MONSTERTHRESHOLDS = [0.5, 1]
-const ENTITYTHRESHOLDS = [0.33, 0.66,  1]
+
 
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
@@ -35,28 +35,33 @@ func _process(delta: float) -> void:
 
 
 
-func CreateDestroyables():
+func CreateDestroyables(biome):
 	var tilemap = get_node("TileMap")
 	var j = 0
 	for i in range(firstTileX, lastTileX):
 
 		var probability = rand_range(0.0, 1.0)
 
+
 		if (probability < TREEPROBABILITY):
+			
 			var y = mapHeightArray[j]
 			var localC = Vector2(i, y)
 			localC.y += yOffset
 			var globalC = tilemap.map_to_world(localC)
 			var entityType = rand_range(0.0, 1.0)
+
 			var entityName = ""
-			if (entityType < ENTITYTHRESHOLDS[0]):
+			if (biome == "swamp"):
 				entityName = "Moss"
-			elif (entityType < ENTITYTHRESHOLDS[1]):
-				entityName = "Moss"
-			elif (entityType < ENTITYTHRESHOLDS[2]):
-				entityName = "Moss"
-
-
+			elif (biome == "forest"):
+				entityName = "Tree"
+			elif (biome == "desert"):
+				entityName = "Cactus"
+			elif (biome == "lake"):
+				entityName = "Seaweed"
+			elif (biome == "mountain"):
+				entityName = "Twig"
 			var entityFile = load("res://Actors/Destroyables/"+entityName+".tscn")
 			var entity = entityFile.instance()
 			entity.position = globalC
@@ -167,13 +172,13 @@ func createTiles():
 
 		lastTileX += 1
 
-
+	return biome
 
 func populateTilemap():
 
-	createTiles()
+	var biome = createTiles()
 	clearPastTiles()
 	#add trees etc
-	CreateDestroyables()
+	CreateDestroyables(biome)
 	CreateMonsters()
 	

@@ -24,7 +24,6 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 
 [sub_resource type="ShaderMaterial" id=7]
 shader = ExtResource( 2 )
-shader_param/waterColorModulator = Plane( 1, 1, 1, 0.5 )
 shader_param/speed = 0.05
 
 [resource]
