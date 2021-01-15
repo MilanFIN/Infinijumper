@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Graphics/Hud/jump_pressed.png" type="Texture" id=13]
 [ext_resource path="res://Actors/Hud/Armorbar.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Actors/Hud/Airbar.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Actors/Hud/Score.tscn" type="PackedScene" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 56, 288 )
@@ -86,3 +87,6 @@ position = Vector2( -194, -84 )
 
 [node name="Airbar" parent="Hud" instance=ExtResource( 15 )]
 position = Vector2( -194, -64 )
+
+[node name="Score" parent="Hud" instance=ExtResource( 16 )]
+position = Vector2( 166, -88 )

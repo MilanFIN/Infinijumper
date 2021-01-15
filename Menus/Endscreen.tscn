@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Endscreen.gd" type="Script" id=1]
+
+[node name="Control" type="Control"]
+margin_right = 420.0
+margin_bottom = 240.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Main" type="Button" parent="."]
+margin_left = 150.0
+margin_top = 150.0
+margin_right = 246.0
+margin_bottom = 170.0
+text = "Ok"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Distance" type="Label" parent="."]
+margin_left = 168.0
+margin_top = 72.0
+margin_right = 224.0
+margin_bottom = 86.0
+text = "Distance"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="."]
+margin_left = 176.0
+margin_top = 96.0
+margin_right = 216.0
+margin_bottom = 110.0
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Main" to="." method="_on_Main_pressed"]

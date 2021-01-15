@@ -117,7 +117,7 @@ func setColumn(tilemap, x, height, biome):
 		else:
 			tilemap.set_cell(lastTileX, height, 3)
 		var firstBelowSurface = height+1
-		for filler in range(firstBelowSurface, firstBelowSurface + 22):
+		for filler in range(firstBelowSurface, firstBelowSurface + 30):
 			tilemap.set_cell(lastTileX, filler, 3)
 	if (biome == "swamp"):
 		tilemap.set_cell(lastTileX, height, 5)

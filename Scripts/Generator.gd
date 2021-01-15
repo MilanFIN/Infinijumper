@@ -40,9 +40,9 @@ func init():
 	#noise.persistence = 0.5
 	randomize()
 	noise.seed = randi()
-	setBiome("lake")
-	lastBiome = "lake"
-	biome = "lake"
+	setBiome("forest")
+	lastBiome = "forest"
+	biome = "forest"
 
 func setBiome(biome):
 	if (biome == "forest"):

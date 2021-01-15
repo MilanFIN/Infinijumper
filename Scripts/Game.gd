@@ -3,9 +3,17 @@ extends Node2D
 
 const MAXJOYSTICKMOVEMENT = 30
 
+const SCOREDIVIDER = 32
+
+var startX = 0
+var lastX
+var score = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
+	startX = int(get_node("Player").position.x)
+	lastX = startX
 
 func _process(delta: float) -> void:
 	if (Input.is_action_pressed("left")):
@@ -40,6 +48,18 @@ func _process(delta: float) -> void:
 		get_node("Hud/Airbar").setHp(air, maxAir)
 	else:
 		get_node("Hud/Airbar").setHp(0, 1)
+	
+	if (int(get_node("Player").position.x) > lastX):
+		lastX = int(get_node("Player").position.x)
+
+	
+	score = (lastX - startX)/SCOREDIVIDER
+	get_node("Hud/Score").setScore(score)
+
+
+	if (get_node("Player").hp <= 0):
+		Global.score = score
+		get_tree().change_scene("res://Menus/Endscreen.tscn")
 
 func _input(event):
 	#this is all joystick related stuff
