@@ -6,7 +6,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func _process(delta: float) -> void:
-	var player = get_tree().get_root().get_node("Game/Player")
+	var player = get_parent().get_parent().get_node("Player")
 	var pos = get_parent().position
 	var velocity = Vector2(0,0)
 	if (abs(pos.x - player.position.x) < 30):

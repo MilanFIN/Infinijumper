@@ -60,6 +60,8 @@ func _process(delta: float) -> void:
 	if (get_node("Player").hp <= 0):
 		Global.score = score
 		get_tree().change_scene("res://Menus/Endscreen.tscn")
+	
+	get_node("Mapbuilder").playerProcess(get_node("Player"))
 
 func _input(event):
 	#this is all joystick related stuff

@@ -26,7 +26,8 @@ func move(delta):
 		speedY = 0
 
 func inWater():
-	var tilemap = get_tree().get_root().get_node("Game/Mapbuilder/TileMap")
+	var tilemap = get_parent().get_node("Mapbuilder/TileMap")
+	#var tilemap = get_tree().get_root().get_node("Game/Mapbuilder/TileMap")
 	var footPosition = get_node("Feet").get_global_position()
 
 	var tilemapPos = tilemap.world_to_map(footPosition)

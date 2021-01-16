@@ -12,12 +12,14 @@ const MONSTERTHRESHOLDS = [0.5, 1]
 var generator = load("res://Scripts/Generator.gd").new()
 #latest column that was completed
 var lastTileX = 0
-var yOffset = 15 #offset under player at startup
+var yOffset = 12 #offset under player at startup
 #first column of generated block
 var firstTileX = 0
 
 var mapHeightArray = []
 
+
+var movedX = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -27,11 +29,16 @@ func _ready() -> void:
 	populateTilemap()
 
 
-func _process(delta: float) -> void:
+
+
+func playerProcess(player):
 	var realLastTileX = get_node("TileMap").map_to_world(Vector2(lastTileX, 0)).x
+	#realLastTileX += 
+
 	var playerX = get_parent().get_node("Player").position.x
 	if (realLastTileX - playerX < MAPGENLEAD):#240
 		populateTilemap()
+
 
 
 
@@ -164,7 +171,7 @@ func createTiles():
 	#first iteration, so should ensure that ground is under player
 	if (tilemap.get_used_cells().size() == 0):
 		var tile = tilemap.world_to_map(get_parent().get_node("Player").position)
-		yOffset = yOffset- mapHeightArray[tile.x]
+		yOffset =  yOffset - mapHeightArray[tile.x]
 
 
 	for x in range(len(mapHeightArray)):

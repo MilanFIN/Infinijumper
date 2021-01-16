@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Mainmenu.gd" type="Script" id=1]
+[ext_resource path="res://Actors/Menubackground.tscn" type="PackedScene" id=2]
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -10,7 +11,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Start" type="Button" parent="."]
+[node name="Background" parent="." instance=ExtResource( 2 )]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Start" type="Button" parent="CanvasLayer"]
 margin_left = 150.0
 margin_top = 100.0
 margin_right = 239.0
@@ -19,4 +24,4 @@ text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="CanvasLayer/Start" to="." method="_on_Start_pressed"]

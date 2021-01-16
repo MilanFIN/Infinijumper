@@ -22,7 +22,7 @@ _global_script_class_icons={
 
 config/name="Test 3"
 run/main_scene="res://Menus/Mainmenu.tscn"
-config/icon="res://icon.png"
+config/icon="res://Graphics/icon.png"
 
 [autoload]
 

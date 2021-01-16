@@ -1,12 +1,10 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Actors/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=2]
-[ext_resource path="res://Actors/Tileset1.tres" type="TileSet" id=3]
-[ext_resource path="res://Scripts/Camera.gd" type="Script" id=4]
+[ext_resource path="res://Actors/Mapbuilder.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Actors/Cameramount.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Graphics/Hud/jump.png" type="Texture" id=5]
-[ext_resource path="res://Scripts/Mapbuilder.gd" type="Script" id=6]
-[ext_resource path="res://Actors/Background.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Actors/Hud/Healthbar.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Graphics/Hud/joystick.png" type="Texture" id=9]
 [ext_resource path="res://Graphics/Hud/joystick_base.png" type="Texture" id=10]
@@ -17,39 +15,12 @@
 [ext_resource path="res://Actors/Hud/Airbar.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Actors/Hud/Score.tscn" type="PackedScene" id=16]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 56, 288 )
-
 [node name="Game" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="Cameramount" type="KinematicBody2D" parent="."]
-position = Vector2( 208, 120 )
-collision_layer = 4
-collision_mask = 0
+[node name="Cameramount" parent="." instance=ExtResource( 4 )]
 
-[node name="Camera2D" type="Camera2D" parent="Cameramount"]
-current = true
-script = ExtResource( 4 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Cameramount"]
-position = Vector2( -264, -8 )
-shape = SubResource( 1 )
-
-[node name="Background" parent="Cameramount" instance=ExtResource( 7 )]
-
-[node name="Mapbuilder" type="Node" parent="."]
-script = ExtResource( 6 )
-
-[node name="TileMap" type="TileMap" parent="Mapbuilder"]
-z_index = -1
-z_as_relative = false
-tile_set = ExtResource( 3 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
-format = 1
-
-[node name="Entities" type="Node" parent="Mapbuilder"]
+[node name="Mapbuilder" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 208, 120 )
