@@ -16,10 +16,10 @@ __meta__ = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Start" type="Button" parent="CanvasLayer"]
-margin_left = 150.0
-margin_top = 100.0
-margin_right = 239.0
-margin_bottom = 124.0
+margin_left = 160.0
+margin_top = 104.0
+margin_right = 249.0
+margin_bottom = 128.0
 text = "Start"
 __meta__ = {
 "_edit_use_anchors_": false

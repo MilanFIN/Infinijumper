@@ -19,11 +19,12 @@
 script = ExtResource( 2 )
 
 [node name="Cameramount" parent="." instance=ExtResource( 4 )]
+position = Vector2( 208, 48 )
 
 [node name="Mapbuilder" parent="." instance=ExtResource( 3 )]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 208, 120 )
+position = Vector2( 208, 72 )
 
 [node name="Hud" type="CanvasLayer" parent="."]
 offset = Vector2( 210, 120 )

@@ -58,50 +58,51 @@ func _physics_process(delta: float) -> void:
 			xDirection *= -1
 
 	var player = get_parent().get_node("Player")
-	if (player is Actor):
+
 
 		#var playerX = get_tree().get_root().get_node("Game/Player").position.x
-		var playerX = get_parent().get_node("Player").position.x
-		if (abs(position.x - playerX) < 100):
-			aggressive = true
+	
+	var playerX = get_parent().get_node("Player").position.x
+	if (abs(position.x - playerX) < 100 and player is Actor):
+		aggressive = true
+	else:
+		aggressive = false
+
+	if (aggressive and timeSpentInDirection > minTimeUntilDirChange):
+		if (playerX < position.x):
+			xDirection = -1
 		else:
-			aggressive = false
-
-		if (aggressive and timeSpentInDirection > minTimeUntilDirChange):
-			if (playerX < position.x):
-				xDirection = -1
-			else:
-				xDirection = 1
-			
-		get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*xDirection, 0)
+			xDirection = 1
+		
+	get_node("Blockageray").cast_to = Vector2(blockCastDistanceX*xDirection, 0)
 
 
-		if (xDirection != previousDir):
-			timeSpentInDirection = 0
+	if (xDirection != previousDir):
+		timeSpentInDirection = 0
 
 
-		if (not aggressive):
-			if (xDirection > 0):
-				get_node("Sprite").flip_h = false
-			else:
-				get_node("Sprite").flip_h = true
+	if (not aggressive):
+		if (xDirection > 0):
+			get_node("Sprite").flip_h = false
 		else:
-			if (position.x > playerX):
-				get_node("Sprite").flip_h = true
-			else:
-				get_node("Sprite").flip_h = false
+			get_node("Sprite").flip_h = true
+	else:
+		if (position.x > playerX):
+			get_node("Sprite").flip_h = true
+		else:
+			get_node("Sprite").flip_h = false
 
 
-		if (aggressive):
-			#var playerPos = get_tree().get_root().get_node("Game/Player").position
-			var playerPos = get_parent().get_node("Player").position
-			if ((playerPos - position).length() < attackDistance):
-				var currentTime = OS.get_ticks_msec()
-				if (currentTime - lastAttackTime > attackDelay):
+	if (aggressive):
+		#var playerPos = get_tree().get_root().get_node("Game/Player").position
+		var playerPos = get_parent().get_node("Player").position
+		if ((playerPos - position).length() < attackDistance):
+			var currentTime = OS.get_ticks_msec()
+			if (currentTime - lastAttackTime > attackDelay):
 
-					get_tree().get_root().get_node("Game/Player").hurt(damage)
-					lastAttackTime = currentTime
-					timeSinceAttack = 0
+				get_tree().get_root().get_node("Game/Player").hurt(damage)
+				lastAttackTime = currentTime
+				timeSinceAttack = 0
 
 
 	#animations
