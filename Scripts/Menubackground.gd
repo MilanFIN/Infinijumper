@@ -3,6 +3,8 @@ extends Node2D
 
 const MOVESPEED = 20
 const PLAYERYOFFSET = 48
+var score = 0
+
 
 var previousValues = []
 var lengthOfRollingAvg = 20

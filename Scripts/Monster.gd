@@ -16,6 +16,7 @@ export var drop = ""
 
 
 
+
 var timeSpentInDirection = 0
 var maxTimeUntilDirChange = 2
 var minTimeUntilDirChange = 0.5
@@ -99,10 +100,8 @@ func _physics_process(delta: float) -> void:
 		if ((playerPos - position).length() < attackDistance):
 			var currentTime = OS.get_ticks_msec()
 			if (currentTime - lastAttackTime > attackDelay):
+				attack()
 
-				get_tree().get_root().get_node("Game/Player").hurt(damage)
-				lastAttackTime = currentTime
-				timeSinceAttack = 0
 
 
 	#animations
@@ -118,6 +117,23 @@ func _physics_process(delta: float) -> void:
 
 
 	tookDamage = false
+	
+	
+
+	speedMultiplier = get_parent().score / 300.0
+	if (speedMultiplier < 1.0):
+		speedMultiplier = 1.0
+	attackMultiplier = get_parent().score / 75.0
+	if (attackMultiplier < 1.0):
+		attackMultiplier = 1.0
+
+
+func attack():
+	var dmg = damage * attackMultiplier
+	get_tree().get_root().get_node("Game/Player").hurt(dmg)
+	lastAttackTime = OS.get_ticks_msec()
+	timeSinceAttack = 0
+
 
 func interact(dmg):
 	if (not tookDamage):

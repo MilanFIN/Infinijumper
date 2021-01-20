@@ -7,6 +7,10 @@ var speedY = 0
 var speedX = 0
 var xDirection = 0
 
+
+var speedMultiplier = 1.0
+var attackMultiplier = 1.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -21,7 +25,7 @@ func move(delta):
 
 
 	speedY +=  gravity*delta
-	move_and_slide(Vector2(xDirection * speedX, speedY), Vector2.UP)
+	move_and_slide(Vector2(xDirection * speedX*speedMultiplier, speedY), Vector2.UP)
 	if (is_on_floor()):
 		speedY = 0
 
