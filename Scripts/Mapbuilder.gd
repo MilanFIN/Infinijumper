@@ -97,9 +97,9 @@ func CreateMonsters():
 			if (monsterType < MONSTERTHRESHOLDS[0]):
 				monsterName = "Ghost"
 			elif (monsterType < MONSTERTHRESHOLDS[1]):
-				monsterName = "Ghost"
+				monsterName = "Spider"
 			elif (monsterType < MONSTERTHRESHOLDS[2]):
-				monsterName = "Ghost"
+				monsterName = "Orc"
 			var monsterFile = load("res://Actors/Monsters/"+monsterName+".tscn")
 			var monster = monsterFile.instance()
 			monster.position = globalC
