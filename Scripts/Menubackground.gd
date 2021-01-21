@@ -4,14 +4,20 @@ extends Node2D
 const MOVESPEED = 20
 const PLAYERYOFFSET = 48
 var score = 0
-
+var highScore = 0
 
 var previousValues = []
 var lengthOfRollingAvg = 20
 
 
+
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	loadHighScore()
+	
+	get_node("Hud/Score").text = str(highScore)
 	pass # Replace with function body.
 
 func _process(delta):
@@ -48,6 +54,11 @@ func _process(delta):
 	player.position.y = tilemap.map_to_world(Vector2(posInTilemap.x, averageY)).y - PLAYERYOFFSET
 	get_node("Mapbuilder").playerProcess(player)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+
+func loadHighScore():
+	var f = File.new()
+	if f.file_exists(Global.scoreFile):
+		f.open(Global.scoreFile, File.READ)
+		var content = f.get_as_text()
+		highScore = int(content)
+		f.close()

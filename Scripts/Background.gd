@@ -1,9 +1,9 @@
 extends Node2D
 
 
-
-const transitionDuration = 5#5 #time between light and dark
-const endDuration = 5#5 #time spent in complete dark or bright between changes 
+#previous background : 01000c
+const transitionDuration = 10#5 #time between light and dark
+const endDuration = 30#5 #time spent in complete dark or bright between changes 
 
 var direction = -1
 var timeAtEnd = 0.0

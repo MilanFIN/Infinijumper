@@ -1,20 +1,37 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
+var highScore = 0
+var score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	get_node("Score").text = str(Global.score)
+	score = Global.score
+	get_node("Score").text = str(score)
+	loadHighScore()
+	if (highScore < score):
+		saveScore()
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+# call this at game end to store a new highscore
+func saveScore():
+	var f = File.new()
+	f.open(Global.scoreFile, File.WRITE)
+	f.store_string(str(score))
+	f.close()
+	print("saved")
+
+
+func loadHighScore():
+	var f = File.new()
+	if f.file_exists(Global.scoreFile):
+		f.open(Global.scoreFile, File.READ)
+		var content = f.get_as_text()
+		highScore = int(content)
+		f.close()
+		print(highScore)
+		
 
 
 func _on_Main_pressed() -> void:
