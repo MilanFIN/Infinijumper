@@ -22,6 +22,7 @@ _global_script_class_icons={
 
 config/name="Test 3"
 run/main_scene="res://Menus/Mainmenu.tscn"
+boot_splash/image="res://icon.png"
 config/icon="res://Graphics/icon.png"
 
 [autoload]
