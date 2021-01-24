@@ -1,7 +1,7 @@
 extends Node
 
 #amount of map that has to exist in front of player or trigger regen
-const MAPGENLEAD = 200 
+const MAPGENLEAD = 420 
 
 
 const TREEPROBABILITY = 0.1

@@ -6,6 +6,9 @@ var score = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	
+	VisualServer.set_default_clear_color(Color("04002d"))
+	
 	score = Global.score
 	get_node("Score").text = str(score)
 	get_node("Reason").text = Global.message
