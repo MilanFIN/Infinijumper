@@ -8,6 +8,7 @@ var score = 0
 func _ready() -> void:
 	score = Global.score
 	get_node("Score").text = str(score)
+	get_node("Reason").text = Global.message
 	loadHighScore()
 	if (highScore < score):
 		saveScore()

@@ -16,8 +16,16 @@ func _process(delta: float) -> void:
 		#prevent camera from moving backwards
 		velocity.x = clamp(velocity.x, 0, 100)
 
+	#uncheck to make camera move continuously
+	if (get_parent().get_parent().get_node("Player") is Actor):
+		velocity.x = clamp(velocity.x, 30, 100)
 	get_parent().move_and_slide(velocity, Vector2.UP)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
+
+
+func _on_Area2D_body_entered(body: Node) -> void:
+	get_tree().get_root().get_node("Game").end("Too slow...")
+

@@ -22,9 +22,9 @@ __meta__ = {
 
 [node name="Distance" type="Label" parent="."]
 margin_left = 168.0
-margin_top = 72.0
+margin_top = 96.0
 margin_right = 224.0
-margin_bottom = 86.0
+margin_bottom = 110.0
 text = "Distance"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -32,10 +32,22 @@ __meta__ = {
 
 [node name="Score" type="Label" parent="."]
 margin_left = 176.0
-margin_top = 96.0
+margin_top = 120.0
 margin_right = 216.0
-margin_bottom = 110.0
+margin_bottom = 134.0
 text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Reason" type="Label" parent="."]
+margin_left = 168.0
+margin_top = 72.0
+margin_right = 224.0
+margin_bottom = 86.0
+grow_horizontal = 2
+text = "Reason"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false

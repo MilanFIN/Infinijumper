@@ -58,8 +58,8 @@ func _process(delta: float) -> void:
 
 
 	if (get_node("Player").hp <= 0):
-		Global.score = score
-		get_tree().change_scene("res://Menus/Endscreen.tscn")
+		end("You died...")
+
 	
 	get_node("Mapbuilder").playerProcess(get_node("Player"))
 
@@ -90,6 +90,9 @@ func _input(event):
 		if event.is_pressed():
 			var absdiff = abs(get_node("Hud/Base").position.x - (event.position.x - 210))
 			print(absdiff)
-#func _draw():
-#	draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
 
+
+func end(msg):
+	Global.score = score
+	Global.message = msg
+	get_tree().change_scene("res://Menus/Endscreen.tscn")

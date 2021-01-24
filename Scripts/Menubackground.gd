@@ -1,7 +1,7 @@
 extends Node2D
 
 
-const MOVESPEED = 20
+const MOVESPEED = 30
 const PLAYERYOFFSET = 48
 var score = 0
 var highScore = 0
