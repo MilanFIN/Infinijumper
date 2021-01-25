@@ -104,6 +104,7 @@ func CreateMonsters():
 			var monster = monsterFile.instance()
 			monster.position = globalC
 			monster.position.x += 8
+			monster.position.y -= 50
 			get_parent().add_child(monster)
 		j += 1
 	pass
