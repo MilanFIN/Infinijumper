@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Test 3"
+config/name="Infinijumper"
 run/main_scene="res://Menus/Mainmenu.tscn"
 boot_splash/image="res://icon.png"
 config/icon="res://Graphics/icon.png"
