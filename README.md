@@ -1,6 +1,8 @@
 # Infinijumper
 
 
+![screenshot of the game](https://github.com/MilanFIN/Infinijumper/blob/main/screenshots/1.png?raw=true)
+
 
 2d android & pc platformer with procedural level generation. 
 
