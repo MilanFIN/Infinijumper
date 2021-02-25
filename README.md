@@ -6,7 +6,7 @@
 
 2d android & pc platformer with procedural level generation. 
 
-Google play link will appear here, when it's approved and public
+[Check it out on google play](https://play.google.com/store/apps/details?id=com.Milan.Test3&hl=fi&gl=US)
 
 The game has: 
 * Different biomes & day/night cycle
